@@ -1,0 +1,16 @@
+{
+  "name": "drone_stuff",
+  "version": "1.0.0",
+  "description": "testing drone via rolling-spider-server-api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ethan Durrant",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.0.0",
+    "restify": "^4.0.0",
+    "temporal": "^0.5.0"
+  }
+}
