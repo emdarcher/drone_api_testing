@@ -24,6 +24,7 @@ server.post('/drone-test/test2', test2_func );
 server.post('/drone-test/test3', test3_func );
 server.post('/drone-test/square', square_func );
 server.post('/drone-test/M', M_func );
+server.post('/drone-test/vsquare', vsquare_func );
 
 function log_client_res(err, req, res, obj){
     assert.ifError(err);
@@ -32,6 +33,88 @@ function log_client_res(err, req, res, obj){
 }
 
 var api_path = '/drone-api/drone';
+
+
+function vsquare_func(req, res, next){
+    temporal.queue([
+        {
+            delay: 1000,
+            task:   function(){
+                droneClient.post(api_path + '/takeOff', {}, function(e,rq,rs,ob){
+                    log_client_res(e, rq, rs, ob);
+                });
+            }
+        },
+        {
+            delay: 2000,
+            task:   function(){
+                droneClient.post(api_path + '/up', {speed:40,steps:20},
+                    function(e,rq,rs,ob){
+                        log_client_res(e,rq,rs,ob);
+                });   
+            }
+        },
+        {
+            delay: 2000,
+            task:   function(){
+                droneClient.post(api_path + '/up', {speed:40,steps:20},
+                    function(e,rq,rs,ob){
+                        log_client_res(e,rq,rs,ob);
+                });   
+            }
+        },
+        {
+            delay: 2000,
+            task:   function(){
+                droneClient.post(api_path + '/right', {speed:20,steps:20},
+                    function(e,rq,rs,ob){
+                        log_client_res(e,rq,rs,ob);
+                });
+            }
+        },
+        {
+            delay: 2000,
+            task:   function(){
+                droneClient.post(api_path + '/down', {speed:40,steps:20},
+                    function(e,rq,rs,ob){
+                        log_client_res(e,rq,rs,ob);
+                });   
+            }
+        },
+        {
+            delay: 2000,
+            task:   function(){
+                droneClient.post(api_path + '/left', {speed:20,steps:20},
+                    function(e,rq,rs,ob){
+                        log_client_res(e,rq,rs,ob);
+                });
+            }
+        },
+        {
+            delay: 2000,
+            task:   function(){
+                droneClient.post(api_path + '/land', {}, function(e,rq,rs,ob){
+                    log_client_res(e,rq,rs,ob);
+                });
+            
+            }
+        },
+        {
+            delay: 2000,
+            task: function(){
+                droneClient.get(api_path, function(e,rq,rs,ob){
+                    log_client_res(e,rq,rs,ob);
+                    res.json({message:"done with test sequence"});
+                });
+            }
+        }
+    ]);
+    return next;
+}
+
+
+
+
 
 function M_func(req, res, next){
     temporal.queue([
@@ -198,16 +281,6 @@ function square_func(req, res, next){
                 });
             }
         },
-        //{
-        //    delay: 2000,
-        //    task:   function(){
-        //        droneClient.post(api_path + '/turnRight', {speed:40,steps:20},
-        //            function(e,rq,rs,ob){
-        //                log_client_res(e,rq,rs,ob);
-        //        });
-        //        
-        //    }
-        //},
         {
             delay: 2000,
             task:   function(){
@@ -236,7 +309,7 @@ function test3_func(req, res, next){
         {
             delay: 1000,
             task:   function(){
-                droneClient.post(api_path + '/takeOff', {}, function(e,rq,rs,ob){
+                droneclient.post(api_path + '/takeoff', {}, function(e,rq,rs,ob){
                     log_client_res(e, rq, rs, ob);
                 });
             }
@@ -244,7 +317,7 @@ function test3_func(req, res, next){
         {
             delay: 2000,
             task:   function(){
-                droneClient.post(api_path + '/up', {speed:40,steps:20},
+                droneclient.post(api_path + '/up', {speed:40,steps:20},
                     function(e,rq,rs,ob){
                         log_client_res(e,rq,rs,ob);
                 });   
@@ -253,7 +326,7 @@ function test3_func(req, res, next){
         {
             delay: 2000,
             task:   function(){
-                droneClient.post(api_path + '/forward', {speed:20,steps:20},
+                droneclient.post(api_path + '/forward', {speed:20,steps:20},
                     function(e,rq,rs,ob){
                         log_client_res(e,rq,rs,ob);
                 });
@@ -262,7 +335,7 @@ function test3_func(req, res, next){
         {
             delay: 2000,
             task:   function(){
-                droneClient.post(api_path + '/backward', {speed:20,steps:20},
+                droneclient.post(api_path + '/backward', {speed:20,steps:20},
                     function(e,rq,rs,ob){
                         log_client_res(e,rq,rs,ob);
                 });
@@ -272,7 +345,7 @@ function test3_func(req, res, next){
         {
             delay: 2000,
             task:   function(){
-                droneClient.post(api_path + '/turnRight', {speed:40,steps:20},
+                droneclient.post(api_path + '/turnright', {speed:40,steps:20},
                     function(e,rq,rs,ob){
                         log_client_res(e,rq,rs,ob);
                 });
@@ -282,7 +355,7 @@ function test3_func(req, res, next){
         {
             delay: 2000,
             task:   function(){
-                droneClient.post(api_path + '/land', {}, function(e,rq,rs,ob){
+                droneclient.post(api_path + '/land', {}, function(e,rq,rs,ob){
                     log_client_res(e,rq,rs,ob);
                 });
             
@@ -291,7 +364,7 @@ function test3_func(req, res, next){
         {
             delay: 2000,
             task: function(){
-                droneClient.get(api_path, function(e,rq,rs,ob){
+                droneclient.get(api_path, function(e,rq,rs,ob){
                     log_client_res(e,rq,rs,ob);
                     res.json({message:"done with test sequence"});
                 });
