@@ -253,7 +253,7 @@ function test3_func(req, res, next){
         {
             delay: 2000,
             task:   function(){
-                droneClient.post(api_path + '/forward', {speed:40,steps:20},
+                droneClient.post(api_path + '/forward', {speed:20,steps:20},
                     function(e,rq,rs,ob){
                         log_client_res(e,rq,rs,ob);
                 });
@@ -262,7 +262,7 @@ function test3_func(req, res, next){
         {
             delay: 2000,
             task:   function(){
-                droneClient.post(api_path + '/backward', {speed:40,steps:20},
+                droneClient.post(api_path + '/backward', {speed:20,steps:20},
                     function(e,rq,rs,ob){
                         log_client_res(e,rq,rs,ob);
                 });
