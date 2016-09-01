@@ -6,5 +6,5 @@ For example to call the API to run the flip demo using the command line tool `cu
 curl -X POST -H "Content-Type: application/json" -d '{}' http://localhost:6767/drone-test/flip
 ```
 
-To control the drone, you must have an instance of [rolling-spider-server-api](https://github.com/emdarcher/rolling-spider-server-api) running. By default this API will expect to find that running on network port 7777 and with a base path of `/drone-api/drone`.
+To control the drone, you must have an instance of [rolling-spider-server-api](https://github.com/emdarcher/rolling-spider-server-api) running. By default this API will expect to find that running on network port 7777 and with a base path of `/drone-api/`.
  
